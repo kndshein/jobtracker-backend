@@ -11,6 +11,7 @@ class AuthenticationController < ApplicationController
                 render json:
                 {
                     email: @user.email,
+                    token: token
                 }
             else
                 render json: { message: "Authentication Failed"}
