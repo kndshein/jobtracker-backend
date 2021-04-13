@@ -10,10 +10,39 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_13_193816) do
+ActiveRecord::Schema.define(version: 2021_04_13_211347) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "contacts", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.integer "phone"
+    t.string "linkedin"
+    t.datetime "creation_date", default: -> { "now()" }
+  end
+
+  create_table "job_infos", force: :cascade do |t|
+    t.text "job_description"
+    t.string "resume"
+    t.string "coverletter"
+    t.string "location_city"
+    t.string "location_state"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "job_times", force: :cascade do |t|
+    t.date "date_applied"
+    t.datetime "time_phonescreen"
+    t.date "date_offered"
+    t.date "date_accepted"
+    t.date "date_companyrejection"
+    t.date "date_userrejection"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "jobs", force: :cascade do |t|
     t.string "status"
@@ -23,13 +52,16 @@ ActiveRecord::Schema.define(version: 2021_04_13_193816) do
     t.datetime "creation_date", default: -> { "now()" }
   end
 
+  create_table "time_interviews", force: :cascade do |t|
+    t.string "title"
+    t.datetime "time"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email"
     t.string "password_digest"
     t.string "name"
-    t.string "contacts", default: [], array: true
     t.datetime "creation_date", default: -> { "now()" }
-    t.string "jobs", default: [], array: true
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
