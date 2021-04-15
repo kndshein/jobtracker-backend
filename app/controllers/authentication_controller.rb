@@ -5,8 +5,10 @@ class AuthenticationController < ApplicationController
         @user = User.find_by(email: params[:email])
         if @user
             if(@user.authenticate(params[:password]))
-                payload = {user_id: @user.id}
+                exp=1.days.from_now.to_i
+                payload = {user_id: @user.id, exp: exp}
                 secret = ENV['SECRET_KEY_BASE'] || Rails.application.secrets.secret_key_base
+                
                 token = create_token(payload)
                 render json:
                 {
