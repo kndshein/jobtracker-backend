@@ -1,19 +1,15 @@
 class UsersController < ApplicationController
-  skip_before_action :authenticate, only: [:create]
-  before_action :set_user, only: [:show, :update, :destroy]
-
-  # GET /users
+  
+  # GET /users - for current information of the user
   def index
-    @users = User.all
-    render json: @users.to_json(include: [:contacts, :jobs])
+    if @user
+      render json: @user.to_json(:include => [:contacts, :jobs], :except => [:id, :password_digest])
+    else
+      render json: { message: "Could not find user"}
+    end
   end
 
-  # GET /users/1
-  def show
-    render json: @user.to_json(include: [:contacts, :jobs])
-  end
-
-  # PATCH/PUT /users/1
+  # PATCH/PUT /users/1 <- to-do
   def update
     if @user.update(user_params)
       render json: @user
@@ -22,14 +18,4 @@ class UsersController < ApplicationController
     end
   end
 
-  # DELETE /users/1
-  def destroy
-    @user.destroy
-  end
-
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
 end

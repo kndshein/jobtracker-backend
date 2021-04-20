@@ -2,9 +2,9 @@ class AuthenticationController < ApplicationController
     skip_before_action :authenticate, only: [:login, :register]
 
     def login
-        @user = User.find_by(email: params[:email])
+        @user = User.find_by(email: login_params[:email])
         if @user
-            if(@user.authenticate(params[:password]))
+            if(@user.authenticate(login_params[:password]))
                 exp = 5.hours.from_now.to_i
                 payload = { user_id: @user.id, exp: exp }
                 token = create_token(payload)
@@ -35,6 +35,10 @@ class AuthenticationController < ApplicationController
         else
             render json: @user.errors, status: :unprocessable_entity
         end
+    end
+
+    def login_params
+        params.require(:login_info).permit(:email, :password)
     end
 
     def register_params
