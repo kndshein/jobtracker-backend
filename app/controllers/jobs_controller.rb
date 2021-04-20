@@ -5,12 +5,12 @@ class JobsController < ApplicationController
   def index
     @jobs = Job.all
 
-    render json: @jobs
+    render json: @jobs.to_json(include: [:job_infos, :job_times])
   end
 
   # GET /jobs/1
   def show
-    render json: @job
+    render json: @job.to_json(include: [:job_infos, :job_times])
   end
 
   # POST /jobs
