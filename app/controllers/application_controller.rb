@@ -13,7 +13,6 @@ class ApplicationController < ActionController::API
             rescue => exception
                 render json: { message: "Error: #{exception}"}, status: :forbidden
             end
-
         else
             render json: { message: "No Authorization header sent"}, status: :forbidden
         end
