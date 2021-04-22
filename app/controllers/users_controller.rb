@@ -26,6 +26,7 @@ class UsersController < ApplicationController
       render json: { message: "Could not find user"}
     end
   end
+
   private
     def update_params
       params.require(:update_info).permit(:email, :password)
