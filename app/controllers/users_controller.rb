@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
+  # @user is taken from current token in header
   
-  # GET /users - for current information of the user
+  # GET /profile - for current information of the user
   def getProfile
     if @user
       render json: @user.to_json(:include => [:contacts, :jobs], :except => [:id, :password_digest])
@@ -9,7 +10,7 @@ class UsersController < ApplicationController
     end
   end
 
-  # PATCH/PUT /users/1
+  # PUT /profile/update/email - to update email of the user
   def updateEmail
     if @user
       if (@user.authenticate(update_params[:password]))
@@ -25,8 +26,8 @@ class UsersController < ApplicationController
       render json: { message: "Could not find user"}
     end
   end
-
-  def update_params
-    params.require(:update_info).permit(:email, :password)
-  end
+  private
+    def update_params
+      params.require(:update_info).permit(:email, :password)
+    end
 end
