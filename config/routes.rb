@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   post 'register', to: 'authentication#register'
 
   # User-related routes
-  get 'profile', to:'users#index'
+  get 'profile', to:'users#getProfile'
   put 'update-email', to: 'users#updateEmail'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

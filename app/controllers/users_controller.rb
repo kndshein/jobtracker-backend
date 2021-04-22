@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   
   # GET /users - for current information of the user
-  def index
+  def getProfile
     if @user
       render json: @user.to_json(:include => [:contacts, :jobs], :except => [:id, :password_digest])
     else
