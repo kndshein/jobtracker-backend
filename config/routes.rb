@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   # Authentication-related routes
   post 'login', to: 'authentication#login'
   post 'register', to: 'authentication#register'
