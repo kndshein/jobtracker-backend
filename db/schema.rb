@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_29_200850) do
+ActiveRecord::Schema.define(version: 2021_05_02_222350) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,6 +46,13 @@ ActiveRecord::Schema.define(version: 2021_04_29_200850) do
     t.index ["user_id"], name: "index_jobs_on_user_id"
   end
 
+  create_table "time_interviews", force: :cascade do |t|
+    t.string "name"
+    t.datetime "time"
+    t.bigint "job_id", null: false
+    t.index ["job_id"], name: "index_time_interviews_on_job_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email"
     t.string "password_digest"
@@ -56,4 +63,5 @@ ActiveRecord::Schema.define(version: 2021_04_29_200850) do
 
   add_foreign_key "contacts", "users"
   add_foreign_key "jobs", "users"
+  add_foreign_key "time_interviews", "jobs"
 end
