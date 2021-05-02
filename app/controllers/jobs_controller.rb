@@ -1,51 +1,50 @@
 class JobsController < ApplicationController
-  before_action :set_job, only: [:show, :update, :destroy]
+  before_action :set_job, only: [:updateJob, :deleteJob]
 
-  # GET /jobs
-  def index
-    @jobs = Job.all
-
-    render json: @jobs.to_json(include: [:job_infos, :job_times])
-  end
-
-  # GET /jobs/1
-  def show
-    render json: @job.to_json(include: [:job_infos, :job_times])
-  end
-
-  # POST /jobs
-  def create
-    @job = Job.new(job_params)
+  # POST /job/create
+  def createJob
+    @job = Job.new(job_params.merge(user: @user))
 
     if @job.save
-      render json: @job, status: :created, location: @job
+      render json: @job.to_json(:except => :user_id), status: :created
     else
       render json: @job.errors, status: :unprocessable_entity
     end
   end
 
-  # PATCH/PUT /jobs/1
-  def update
-    if @job.update(job_params)
-      render json: @job
+  # PUT /job/:id
+  def updateJob
+    p "POOP", @job
+    if @job.user_id == @user.id
+        if @job.update(job_params)
+            render json: @job.to_json(:except => :user_id)
+        else
+            render json: @job.errors, status: :unprocessable_entity
+        end
     else
-      render json: @job.errors, status: :unprocessable_entity
+        render json: { message: "Job does not belong to User"}
     end
   end
 
-  # DELETE /jobs/1
-  def destroy
-    @job.destroy
+  # DELETE /job/:id
+  def deleteJob
+    if @job.user_id == @user.id
+      if @job.destroy
+        render json: { message: "Job deleted" }
+      else
+        render json: @job.errors, status: :unprocessable_entity
+      end
+    else
+      render json: { message: "Job does not belong to User" }
+    end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_job
       @job = Job.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
     def job_params
-      params.require(:job).permit(:status, :job_title, :job_industry, :company_name)
+      params.require(:job_info).permit(:status, :job_title, :job_industry, :company_name, :date_applied, :time_phonescreen, :date_offered, :date_accepted, :date_companyrejection, :date_userrejection, :job_description, :resume, :coverletter, :location_city, :location_state)
     end
 end
