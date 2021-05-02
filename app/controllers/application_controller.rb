@@ -20,11 +20,11 @@ class ApplicationController < ActionController::API
 
     
     def secret
-        secret = ENV['SECRET_KEY_BASE'] || Rails.application.secrets.secret_key_base
+        secret = ENV['SECRET_KEY_BASE'] || Rails.application.credentials.secret_key_base
     end
 
     def create_token(payload)
-        JWT.encode(payload,secret, "HS256")
+        JWT.encode(payload, secret, "HS256")
     end
 
 end
