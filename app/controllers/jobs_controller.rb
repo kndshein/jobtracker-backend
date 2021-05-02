@@ -6,7 +6,7 @@ class JobsController < ApplicationController
     @job = Job.new(job_params.merge(user: @user))
 
     if @job.save
-      render json: @job.to_json(:except => :user_id), status: :created
+      render json: @job.to_json(:include => [:time_interviews], :except => :user_id), status: :created
     else
       render json: @job.errors, status: :unprocessable_entity
     end
@@ -14,10 +14,9 @@ class JobsController < ApplicationController
 
   # PUT /job/:id
   def updateJob
-    p "POOP", @job
     if @job.user_id == @user.id
         if @job.update(job_params)
-            render json: @job.to_json(:except => :user_id)
+            render json: @job.to_json(:include => [:time_interviews], :except => :user_id)
         else
             render json: @job.errors, status: :unprocessable_entity
         end
@@ -41,7 +40,7 @@ class JobsController < ApplicationController
 
   private
     def set_job
-      @job = Job.find(params[:id])
+      @job = Job.find_by(id: params[:id])
     end
 
     def job_params

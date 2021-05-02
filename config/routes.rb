@@ -16,6 +16,11 @@ Rails.application.routes.draw do
   post '/job/create', to:'jobs#createJob'
   put '/job/:id', to:'jobs#updateJob'
   delete '/job/:id', to: 'jobs#deleteJob'
+
+  # Interview-related routes
+  post '/job/:id/interview/', to:'time_interviews#createInterview'
+  put 'interview/:id', to:'time_interviews#updateInterview'
+  delete 'interview/:id', to:'time_interviews#deleteInterview'
   
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

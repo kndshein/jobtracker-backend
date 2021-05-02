@@ -1,3 +1,3 @@
-class Time_Interview < ApplicationRecord
+class TimeInterview < ApplicationRecord
     belongs_to :job
 end
