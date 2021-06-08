@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   # GET /profile - for current information of the user
   def getProfile
     if @user
-      render json: @user.to_json(:include => [{:contacts => { :except => :user_id}}, {:jobs => {:include => [:time_interviews], :except => :user_id}}], :except => [:id, :password_digest])
+      render json: @user.to_json(:include => [{:contacts => {:only => :id}}, {:jobs => {:include => [:timeline_times], :only => :id}}], :except => [:id, :password_digest])
     else
       render json: { message: "Could not find user"}
     end

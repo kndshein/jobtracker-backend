@@ -18,10 +18,10 @@ Rails.application.routes.draw do
   put '/job/:id', to:'jobs#updateJob'
   delete '/job/:id', to: 'jobs#deleteJob'
 
-  # Interview-related routes
-  post '/job/:id/interview/', to:'time_interviews#createInterview'
-  put 'interview/:id', to:'time_interviews#updateInterview'
-  delete 'interview/:id', to:'time_interviews#deleteInterview'
+  # Timeline-related routes
+  post '/job/:id/time/', to:'timeline_times#createTime'
+  put '/time/:id', to:'timeline_times#updateTime'
+  delete '/time/:id', to:'timeline_times#deleteTime'
   
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

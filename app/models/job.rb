@@ -1,4 +1,4 @@
 class Job < ApplicationRecord
     belongs_to :user
-    has_many :time_interviews, :dependent => :destroy
+    has_many :timeline_times, :dependent => :destroy
 end

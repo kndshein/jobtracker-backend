@@ -6,7 +6,7 @@ class JobsController < ApplicationController
     @job = Job.new(job_params.merge(user: @user))
 
     if @job.save
-      render json: @job.to_json(:include => [:time_interviews], :except => :user_id), status: :created
+      render json: @job.to_json(:include => [:timeline_times], :except => :user_id), status: :created
     else
       render json: @job.errors, status: :unprocessable_entity
     end
@@ -15,7 +15,7 @@ class JobsController < ApplicationController
   # GET /job/:id
   def getJob
     if @job.user_id == @user.id
-      render json: @job.to_json(:include => [:time_interviews], :except => :user_id)
+      render json: @job.to_json(:include => [:timeline_times], :except => :user_id)
     else
       render json: { message: "Job does not belong to User" }
     end
@@ -26,7 +26,7 @@ class JobsController < ApplicationController
   def updateJob
     if @job.user_id == @user.id
         if @job.update(job_params)
-            render json: @job.to_json(:include => [:time_interviews], :except => :user_id)
+            render json: @job.to_json(:include => [:timeline_times], :except => :user_id)
         else
             render json: @job.errors, status: :unprocessable_entity
         end

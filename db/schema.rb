@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_26_000632) do
+ActiveRecord::Schema.define(version: 2021_06_08_211408) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,11 +47,11 @@ ActiveRecord::Schema.define(version: 2021_05_26_000632) do
     t.index ["user_id"], name: "index_jobs_on_user_id"
   end
 
-  create_table "time_interviews", force: :cascade do |t|
+  create_table "timeline_times", force: :cascade do |t|
     t.string "name"
     t.datetime "time"
     t.bigint "job_id", null: false
-    t.index ["job_id"], name: "index_time_interviews_on_job_id"
+    t.index ["job_id"], name: "index_timeline_times_on_job_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -64,5 +64,5 @@ ActiveRecord::Schema.define(version: 2021_05_26_000632) do
 
   add_foreign_key "contacts", "users"
   add_foreign_key "jobs", "users"
-  add_foreign_key "time_interviews", "jobs"
+  add_foreign_key "timeline_times", "jobs"
 end
