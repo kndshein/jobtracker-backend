@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   delete '/contact/:id', to: 'contacts#deleteContact'
 
   # Job-related routes
+  get '/job/:id', to:'jobs#getJob'
   post '/job/create', to:'jobs#createJob'
   put '/job/:id', to:'jobs#updateJob'
   delete '/job/:id', to: 'jobs#deleteJob'

@@ -1,5 +1,5 @@
 class JobsController < ApplicationController
-  before_action :set_job, only: [:updateJob, :deleteJob]
+  before_action :set_job, only: [:getJob, :updateJob, :deleteJob]
 
   # POST /job/create
   def createJob
@@ -11,6 +11,16 @@ class JobsController < ApplicationController
       render json: @job.errors, status: :unprocessable_entity
     end
   end
+
+  # GET /job/:id
+  def getJob
+    if @job.user_id == @user.id
+      render json: @job.to_json(:include => [:time_interviews], :except => :user_id)
+    else
+      render json: { message: "Job does not belong to User" }
+    end
+  end
+    
 
   # PUT /job/:id
   def updateJob
@@ -44,6 +54,6 @@ class JobsController < ApplicationController
     end
 
     def job_params
-      params.require(:job_info).permit(:status, :job_title, :job_industry, :company_name, :date_applied, :time_phonescreen, :date_offered, :date_accepted, :date_companyrejection, :date_userrejection, :job_description, :resume, :coverletter, :location_city, :location_state)
+      params.require(:job_info).permit(:status, :job_title, :job_industry, :company_name, :date_applied, :time_phonescreen, :date_offered, :date_accepted, :date_companyrejection, :date_userrejection, :job_description, :resume, :coverletter, :location_city, :location_state, :excitement, :status)
     end
 end

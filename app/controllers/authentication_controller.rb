@@ -11,29 +11,35 @@ class AuthenticationController < ApplicationController
                 render json:
                 {   
                     status: "Logged In",
+                    message: "Log in successful.",
                     token: token
                 }
             else
-                render json: { message: "Authentication Failed"}
+                render json: { message: "Username or password is incorrect." }
             end
         else
-            render json: { message: "Could not find user"}
+            render json: { message: "Username or password is incorrect." }
         end
     end
 
     def register
-        @user = User.new(register_params)
-        if @user.save
-            exp = 5.hours.from_now.to_i
-            payload = { user_id: @user.id, exp: exp }
-            token = create_token(payload)
-            render json: 
-            {
-                status: :created,
-                token: token
-            }
+        if User.find_by(email: register_params[:email])
+            render json: { message: "Email has been taken."}
         else
-            render json: @user.errors, status: :unprocessable_entity
+            @user = User.new(register_params)
+            if @user.save
+                exp = 5.hours.from_now.to_i
+                payload = { user_id: @user.id, exp: exp }
+                token = create_token(payload)
+                render json: 
+                {
+                    status: :created,
+                    message: "Registration successful.",
+                    token: token
+                }
+            else
+                render json: @user.errors, status: :unprocessable_entity
+            end
         end
     end
 

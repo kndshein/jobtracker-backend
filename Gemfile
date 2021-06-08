@@ -42,4 +42,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'hirb'
 gem 'bcrypt'
 gem 'jwt'
-gem 'cors'
+gem 'rack-cors'
