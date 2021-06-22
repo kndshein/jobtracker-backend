@@ -2,26 +2,30 @@ version: "3.8"
 
 services:
   web:
-    build: .
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
-    ports:
-      - 3000:3000
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    image: job_tracker_dev_server
     depends_on:
       - db
-    environment:
-      DBHOST: db
-      DBUSER: postgres
-      DBPASS: password
+    ports: 
+      - 3000:3000
+    restart: "no"
+    environment: 
+      - DBHOST=${DBHOST}
+      - DBUSER=${DBUSER}
+      - DBPASS=${DBPASS}
 
   db:
-    image: postgres:latest
-    environment:
-      POSTGRES_DB: database
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
+    image: postgres
+    restart: "no"
+    environment: 
+       - POSTGRES_DB=${POSTGRES_DB}
+       - POSTGRES_USER=${POSTGRES_USER}
+       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
 
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - development_db_data:/var/lib/postgresql/data
 
 volumes:
-  db_data:
+  development_db_data:
