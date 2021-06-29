@@ -21,10 +21,10 @@ default: &default
 
 development:
   <<: *default
-  username: <%= ENV['DBUSER'] %>
-  password: <%= ENV['DBPASS'] %>
+  username: postgres
+  password: password
   port: 5432
-  host: <%= ENV['DBHOST'] %>
+  host: db
  
 
   # The specified database role being used to connect to postgres.
