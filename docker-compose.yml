@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    image: job_tracker_dev_server
+    depends_on:
+      - db
+    ports:
+      - 3000:3000
+    restart: "no"
+    environment:
+      DBUSER: postgres
+      DBPASS: password
+
+  db:
+    image: postgres
+    restart: "no"
+    environment:
+      POSTGRES_DB: job_tracker_DB
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+
+    volumes:
+      - development_db_data:/var/lib/postgresql/data
+
+volumes:
+  development_db_data:
