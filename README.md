@@ -24,6 +24,11 @@ Job Tracker's API uses a docker container to run the development environment. Fo
         - This command will stop the container. 
 - Your dev environment is setup. To start and stop the contianer during coidng session, run the ```$ docker compose up``` to start or ```$ docker compose down``` to stop.
 
+- To remove containers, images, and volumes we recommend using Docker Desktop. 
+    - If you prefer to to use your terminal you can use the command ```docker ps -a``` to look up all containers and then run  ```docker rmi [OPTIONS] IMAGE [IMAGE...]``` on the specific container you want to remove.
+    - If you would like to remove all containers, images, and containers you can run ```docker system prune``` WARNING: this will delete ALL containers, images, and volumes from your system. 
+    - For more information take a look at the [Docker Docs](https://docs.docker.com/engine/reference/commandline/rmi/)
+
 #### Links
 
 - Frontend - [Repo](https://github.com/kndshein/jobtracker-frontend) // [Deployed](https://jobtracker-frontend.netlify.app)
